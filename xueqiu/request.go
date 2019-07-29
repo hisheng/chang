@@ -57,7 +57,10 @@ func (request_ Request_) Run ()  {
 
 	for _,stock := range rs.Data.List{
 		stock.InitOiyPe()
-		fmt.Println(stock)
+		s := fmt.Sprintf("%s %4s 营业收入增长 %.2f 利润增长 %.2f pe为 %.2f",stock.Symbol,stock.Name,stock.Oiy,stock.Npay,stock.Pettm)
+		fmt.Println(s)
+		//return fmt.Sprintf("sm,SM,um,UM=%d,%d,%d,%d", l.min, l.max, l.umin, l.umax)
+
 	}
 }
 
