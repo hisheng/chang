@@ -16,6 +16,11 @@ type StockSummary struct {
 	Current float32 `json:"current"`//目前价格
 	Name string `json:"name"`//名
 	Oiy float32 `json:"oiy"`// 营业收入同比增长
+	OiyPe float32    //  营业收入同比增长 / Pettm
+}
+
+func (stockSummary *StockSummary) InitOiyPe ()  {
+	stockSummary.OiyPe = stockSummary.Oiy / stockSummary.Pettm
 }
 
 

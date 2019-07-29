@@ -1,6 +1,9 @@
 package xueqiu
 
 import (
+	"encoding/json"
+	"fmt"
+	"github.com/hisheng/chang/curl"
 	"net/url"
 )
 
@@ -24,16 +27,39 @@ func initSearchParms()  {
 	Request.SearchParms.Add("order_by","pettm")
 	Request.SearchParms.Add("order","asc")
 	Request.SearchParms.Add("page","1")
-	Request.SearchParms.Add("size","2")
+	Request.SearchParms.Add("size","60")
 	Request.SearchParms.Add("current","")
 	Request.SearchParms.Add("pettm","4_10")
-	Request.SearchParms.Add("oiy.20190331","-99.42_44065.32")
-	Request.SearchParms.Add("npay.20190331","-28250.4_80737.8")
+	Request.SearchParms.Add("oiy.20190331","10_1000")
+	Request.SearchParms.Add("npay.20190331","10_1000")
 	Request.SearchParms.Add("_","1564377012355")
 	Request.SearchParms.Add("pct","")
 	Request.SearchParms.Add("only_count","0")
-
-
 }
+
+func (request_ Request_) Run ()  {
+	data := curl.Get(request_.SearchUrl,request_.SearchParms)
+
+	fmt.Println(data)
+
+	str:=[]byte(data)
+
+
+	rs := XueqiuJsonResponse{}
+
+	err:= json.Unmarshal(str,&rs)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(rs)
+
+	fmt.Println(rs.Data.List)
+
+	for _,stock := range rs.Data.List{
+		stock.InitOiyPe()
+		fmt.Println(stock)
+	}
+}
+
 
 
