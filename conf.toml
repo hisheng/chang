@@ -1,0 +1,14 @@
+debug = true
+[httpserver]
+addr = ":20000"
+
+[redis]
+ip="127.0.0.1"
+password=""
+
+[mysql]
+ip="127.0.0.1"
+port=":3306"
+user="hisheng"
+password="hisheng"
+database="chang"
