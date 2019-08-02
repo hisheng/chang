@@ -7,8 +7,6 @@ import (
 )
 
 
-
-
 func Get(url string , parms url.Values) string{
 	resp, err := http.Get(url+ "?"+parms.Encode())
 	if err != nil {
@@ -46,3 +44,5 @@ func Post(url string,parms url.Values) string{
 	//fmt.Println(string(body))
 	//fmt.Printf("%s",body)
 }
+
+

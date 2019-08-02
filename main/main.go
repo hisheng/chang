@@ -8,9 +8,12 @@ import (
 
 func init()  {
 	conf.Conf.Init()
+	conf.XueqiuCookie.Init()
 	db.GetDb()
 }
 
+
 func main()  {
-	xueqiu.StockSummaryModel.Run()
+	//xueqiu.StockSummaryModel.Run()
+	xueqiu.StockChartModel.Run()
 }

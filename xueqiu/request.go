@@ -1,6 +1,12 @@
 package xueqiu
 
-import "net/url"
+import (
+	"fmt"
+	"github.com/hisheng/chang/conf"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+)
 
 
 type Request_ struct {
@@ -8,3 +14,26 @@ type Request_ struct {
 	SearchParms url.Values
 }
 
+func Get(url string,parms url.Values) string {
+	cookies := conf.XueqiuCookie.Cookies
+
+	client := &http.Client{}
+
+	req, err := http.NewRequest("GET", url+ "?"+parms.Encode(), nil)
+	if err!=nil	{
+		fmt.Println("获取地址错误")
+	}
+	req.Header.Set("Cookie", cookies)
+	//req.Header.Add("Agent",GetRandomUserAgent() )
+	resp, err := client.Do(req)
+	if err!=nil {
+		fmt.Println("登录错误")
+	}
+	resp_byte, err := ioutil.ReadAll(resp.Body)
+
+	defer resp.Body.Close()
+
+
+	return string(resp_byte)
+
+}
