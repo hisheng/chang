@@ -18,6 +18,7 @@ var StockChartModel StockChart
 
 type StockChart struct {
 	gorm.Model
+	Symbol string
 	Timestamp string
 	Volume string
 	Open string
@@ -89,6 +90,8 @@ func (s StockChart)Add(sm map[string]interface{}){
 			s.MarketCapital = val
 		case "balance":
 			s.Balance = val
+		case "symbol":
+			s.Symbol = val
 		}
 	}
 	db.DB.Table(s.getTableName()).Create(&s) //会引起 Lock wait timeout exceeded; try restarting transaction
@@ -121,7 +124,6 @@ func (s StockChart) Run ()  {
 	request := initChartRequest()
 	data := Get(request.SearchUrl,request.SearchParms)
 
-	fmt.Println(data)
 
 	str:=[]byte(data)
 
@@ -132,21 +134,24 @@ func (s StockChart) Run ()  {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(rs)
-
-
-	fmt.Println(rs.Data.Symbol)
-	fmt.Println(rs.Data.Column)
-	fmt.Println(rs.Data.Item)
-
 	for _,stock := range rs.Data.Item{
 		sm := make(map[string]interface{})
+		sm["symbol"] = getSymbol(rs.Data.Symbol)
 		for index,d := range stock{
 			sm[rs.Data.Column[index]] = d
 		}
-		fmt.Println(sm)
 		StockChartModel.Add(sm)
 	}
+}
+
+func getSymbol(symbol string) string {
+	switch symbol[0:2] {
+	case "SH":
+		return symbol[2:]
+	default:
+		return ""
+	}
+
 }
 
 //chart json

@@ -43,17 +43,16 @@ https://studygolang.com/articles/7588
 
 查看代码行数
 cloc ./
-       9 text files.
-       9 unique files.                              
+      11 text files.
+      11 unique files.                              
        1 file ignored.
 
-github.com/AlDanial/cloc v 1.82  T=0.03 s (281.7 files/s, 11423.4 lines/s)
+github.com/AlDanial/cloc v 1.82  T=0.03 s (335.8 files/s, 16911.9 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Go                               7             68             15            227
-Markdown                         1             21              0             20
-TOML                             1              2              0             12
+Go                               8            106             17            357
+Markdown                         1             24              0             35
+TOML                             2              2              0             13
 -------------------------------------------------------------------------------
-SUM:                             9             91             15            259
--------------------------------------------------------------------------------
+SUM:                            11            132             17            405
