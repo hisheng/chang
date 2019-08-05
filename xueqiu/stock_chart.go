@@ -7,6 +7,8 @@ import (
 	"github.com/hisheng/phpgo"
 	"github.com/jinzhu/gorm"
 	"net/url"
+	"strconv"
+	"time"
 )
 
 /*
@@ -18,25 +20,26 @@ var StockChartModel StockChart
 
 type StockChart struct {
 	gorm.Model
-	Symbol string
-	Timestamp string
-	Volume string
-	Open string
-	High string
-	Low string
-	Close string
-	Chg string
-	Percent string
-	Turnoverrate string
-	Amount string
+	Symbol string `sql:"type:varchar(20)"`
+	Timestamp string `sql:"type:int(11)"`
+	Volume string  `sql:"type:bigint DEFAULT '0' "`
+	Open string   `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
+	High string  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
+	Low string   `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
+	Close string  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
+	Chg string  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
+	Percent string  `sql:"type:decimal(10,2) DEFAULT '0.00' "`
+	Turnoverrate string  `sql:"type:decimal(10,2) DEFAULT '0.00' "`
+	Amount string  `sql:"type:bigint DEFAULT '0' "`
 	VolumePost string `json:"volume_post"`
 	AmountPost string `json:"amount_post"`
-	Pe string
-	Pb string
-	Ps string
-	Pcf string
-	MarketCapital string
-	Balance string
+	Pe string  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
+	Pb string  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
+	Ps string  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
+	Pcf string  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
+	MarketCapital string  `sql:"type:decimal(20,2) DEFAULT '0.00' "`
+	Balance string   `sql:"type:decimal(20,2) DEFAULT '0.00' "`
+	GatherDay string  `gorm:"column:gather_day" sql:"type:date"`
 }
 
 func (s StockChart) getTableName() string {
@@ -54,14 +57,18 @@ func (s StockChart) createTable()  {
 func (s StockChart)Add(sm map[string]interface{}){
 	for k,v := range sm{
 		val := phpgo.Strval(v)
-
 		switch k {
 		case "pe":
 			s.Pe = val
 		case "pb":
 			s.Pb = val
 		case "timestamp":
-			s.Timestamp = val
+			s.Timestamp = val[:10]
+
+			int64t, err := strconv.ParseInt(s.Timestamp, 10, 64)
+			if err != nil {}
+			tm := time.Unix(int64t, 0)
+			s.GatherDay = tm.Format("2006-01-02")
 		case "volume":
 			s.Volume = val
 		case "open":
@@ -89,7 +96,12 @@ func (s StockChart)Add(sm map[string]interface{}){
 		case "market_capital":
 			s.MarketCapital = val
 		case "balance":
-			s.Balance = val
+			fmt.Println(val)
+			if len(val) > 0 {
+				s.Balance = val
+			}else {
+				s.Balance = "0.00"
+			}
 		case "symbol":
 			s.Symbol = val
 		}
