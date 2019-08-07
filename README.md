@@ -5,7 +5,7 @@ http://quotes.money.163.com/f10/hydb_601155.html#01g01
 以对比为 核心的 分析体系
 
 
-
+https://labs.zoe.im/Xueqiu-Spider/ 
 
 
 一 性价比 对比
@@ -36,9 +36,23 @@ https://xueqiu.com/snowman/S/SH601155/detail#/ZYCWZB
 
 把这两个数据 弄好，基本 第一个核心功能就ok 了
 
+----这个需要 爬 html  https://github.com/PuerkitoBio/goquery 
+goquery---下一步先走通这个 爬虫，试试数据，然后 数据有了，就是 
+展示数据
+----最后这些逻辑走通了，就是 
+完善数据
+
+
 
 //命令行 工具
 https://studygolang.com/articles/7588
+
+
+
+通过 问询函  学习分析财报
+http://www.sse.com.cn/disclosure/credibility/supervision/inquiries/
+
+
 
 
 查看代码行数
@@ -51,7 +65,7 @@ github.com/AlDanial/cloc v 1.82  T=0.03 s (335.8 files/s, 16911.9 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Go                               8            106             17            357
+Go                               8            106             17            375
 Markdown                         1             24              0             35
 TOML                             2              2              0             13
 -------------------------------------------------------------------------------

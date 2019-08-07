@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/hisheng/chang/conf"
 	"github.com/hisheng/chang/db"
-	"github.com/hisheng/chang/xueqiu"
+	"github.com/hisheng/chang/xueqiu/caiwu"
 )
 
 func init()  {
@@ -15,5 +15,6 @@ func init()  {
 
 func main()  {
 	//xueqiu.StockSummaryModel.Run()
-	xueqiu.StockChartModel.Run()
+	//xueqiu.StockChartModel.Run()
+	caiwu.LirunbiaoRequest.Run()
 }

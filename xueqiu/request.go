@@ -37,3 +37,13 @@ func Get(url string,parms url.Values) string {
 	return string(resp_byte)
 
 }
+
+func GetSymbol(symbol string) string {
+	switch symbol[0:2] {
+	case "SH":
+		return symbol[2:]
+	default:
+		return ""
+	}
+
+}

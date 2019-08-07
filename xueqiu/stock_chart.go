@@ -148,7 +148,7 @@ func (s StockChart) Run ()  {
 	}
 	for _,stock := range rs.Data.Item{
 		sm := make(map[string]interface{})
-		sm["symbol"] = getSymbol(rs.Data.Symbol)
+		sm["symbol"] = GetSymbol(rs.Data.Symbol)
 		for index,d := range stock{
 			sm[rs.Data.Column[index]] = d
 		}
@@ -156,15 +156,7 @@ func (s StockChart) Run ()  {
 	}
 }
 
-func getSymbol(symbol string) string {
-	switch symbol[0:2] {
-	case "SH":
-		return symbol[2:]
-	default:
-		return ""
-	}
 
-}
 
 //chart json
 type  XueqiuChartJsonResponse struct{
