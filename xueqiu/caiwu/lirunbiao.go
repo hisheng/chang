@@ -7,6 +7,8 @@ import (
 	"github.com/hisheng/chang/xueqiu"
 	"github.com/jinzhu/gorm"
 	"net/url"
+	"strconv"
+	"time"
 )
 
 /*
@@ -18,6 +20,7 @@ var LirunbiaoRequest LirunbiaoRequest_
 
 type Lirunbiao_ struct {
 	gorm.Model
+	Report_type string
 	Symbol string `sql:"type:varchar(20)"`
 	Report_name string //1546185600000
 	Report_date int  //"2018年报"
@@ -65,6 +68,7 @@ type OperatingCosts struct {
 	Invest_incomes_from_rr float64 //其中：对联营企业和合营企业的投资收益
 	Asset_disposal_income float64 //资产处置收益
 	Other_income float64  //其他收益
+	GatherDay string
 }
 
 type LirunbiaoPercent struct {
@@ -129,7 +133,7 @@ func (request LirunbiaoRequest_) initRequest() LirunbiaoRequest_{
 
 	request.SearchParms = url.Values{}
 	request.SearchParms.Add("symbol","SH601155")
-	request.SearchParms.Add("type","Q4")
+	request.SearchParms.Add("type","all")
 	request.SearchParms.Add("is_detail","true")
 	request.SearchParms.Add("count","20")
 	request.SearchParms.Add("timestamp","")
@@ -142,6 +146,16 @@ func (request LirunbiaoRequest_) Run ()  {
 	Lirunbiao.createTable()
 
 	request = request.initRequest()
+	fmt.Println(request.SearchParms.Get("type"))
+
+	for i:= 1;i<=4;i++ {
+		request.SearchParms.Set("type","Q"+strconv.Itoa(i))  //Q1代表一季度
+		request.RunGet()
+	}
+
+}
+
+func (request LirunbiaoRequest_) RunGet()  {
 	data := xueqiu.Get(request.SearchUrl,request.SearchParms)
 
 	str:=[]byte(data)
@@ -157,7 +171,14 @@ func (request LirunbiaoRequest_) Run ()  {
 		l := Lirunbiao_{}
 		l.Symbol = request.SearchParms.Get("symbol")
 		l.Report_name = stock.Report_name
-		l.Report_date = stock.Report_date
+
+		val := stock.Report_date /1000
+		int64_ := int64(val)
+		tm := time.Unix(int64_ , 0)
+		l.GatherDay = tm.Format("2006-01-02")
+		l.Report_date = val
+
+		l.Report_type = request.SearchParms.Get("type")
 		l.Net_profit = stock.Net_profit[0]
 		l.Net_profit_percent = stock.Net_profit[1]
 		l.Net_profit_atsopc = stock.Net_profit_atsopc[0]
