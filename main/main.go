@@ -16,9 +16,10 @@ func init()  {
 func main()  {
 	//xueqiu.StockSummaryModel.Run()
 	//xueqiu.StockChartModel.Run()
-	caiwu.LirunbiaoRequest.Run()
+	//caiwu.LirunbiaoRequest.Run()
 
 	//fmt.Println(xueqiu.Areas)
 	//xueqiu.SymbolRequest.Run()
+	caiwu.XianjinliuRequest.Run()
 
 }
