@@ -89,7 +89,7 @@ type LirunbiaoPercent struct {
 	Invest_incomes_from_rr_percent float64 //其中：对联营企业和合营企业的投资收益
 	Asset_disposal_income_percent float64 //资产处置收益
 	Other_income_percent float64  //其他收益
-	Op_percent_percent float64 //营业利润
+	Op_percent float64 //营业利润
 	Non_operating_income_percent float64 //加：营业外收入
 	Non_operating_payout_percent float64 //减：营业外支出
 	Profit_total_amt_percent float64  //利润总额
@@ -186,7 +186,7 @@ func (request LirunbiaoRequest_) RunGet()  {
 		l.Total_revenue = stock.Total_revenue[0]
 		l.Total_revenue_percent = stock.Total_revenue[1]
 		l.Op = stock.Op[0]
-		l.Op = stock.Op[1]
+		l.Op_percent = stock.Op[1]
 		l.Income_from_chg_in_fv = stock.Income_from_chg_in_fv[0]
 		l.Income_from_chg_in_fv_percent = stock.Income_from_chg_in_fv[1]
 		l.Invest_incomes_from_rr = stock.Invest_incomes_from_rr[0]
