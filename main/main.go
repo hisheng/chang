@@ -20,6 +20,7 @@ func main()  {
 
 	//fmt.Println(xueqiu.Areas)
 	//xueqiu.SymbolRequest.Run()
-	caiwu.XianjinliuRequest.Run()
+	//caiwu.XianjinliuRequest.Run()
+	caiwu.ZichanfuzhaiRequest.Run()
 
 }
