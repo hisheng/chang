@@ -21,9 +21,16 @@ type Model struct {
 var (
 	DB *gorm.DB
 	err error
+	ReportDb *gorm.DB
 )
 
 func GetDb() {
+	initChangDb()
+	initReportDb()
+	//return db
+}
+
+func initChangDb()  {
 	DB, err = gorm.Open(
 		"mysql",
 		conf.Conf.MysqlConf.User +
@@ -36,8 +43,21 @@ func GetDb() {
 		log.Fatal(err)
 		defer DB.Close()
 	}
+}
 
-	//return db
+func initReportDb()  {
+	ReportDb, err = gorm.Open(
+		"mysql",
+		conf.Report.MysqlReport.User +
+			":"+conf.Report.MysqlReport.Password +
+			"@tcp("+conf.Report.MysqlReport.Ip +
+			conf.Report.MysqlReport.Port+")/" +
+			conf.Report.MysqlReport.Database +
+			"?charset=utf8mb4&parseTime=true&loc=Local")
+	if err != nil {
+		log.Fatal(err)
+		defer ReportDb.Close()
+	}
 }
 
 
