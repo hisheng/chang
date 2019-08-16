@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"time"
 )
 
 var XueqiuRequest  Request_
@@ -56,16 +55,3 @@ func createTable()  {
 	Xianjinliu.CreateTable()
 }
 
-func XueqiuInitData()  {
-	createTable()
-
-	ss := Symbol.Gets()
-
-	for _,s := range ss{
-		fmt.Println(s)
-		go XianjinliuRequest.Run(s.Symbol)
-		go LirunbiaoRequest.Run(s.Symbol)
-		go ZichanfuzhaiRequest.Run(s.Symbol)
-		time.Sleep(time.Millisecond * 500)
-	}
-}

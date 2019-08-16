@@ -13,7 +13,7 @@ func init()  {
 }
 
 func main()  {
-	xueqiu.XueqiuInitData()
+	xueqiu.InitData()
 	//xueqiu.StockSummaryModel.Run()
 	//xueqiu.StockChartModel.Run()
 	//caiwu.LirunbiaoRequest.Run()
@@ -27,9 +27,4 @@ func main()  {
 	//fmt.Println(b.val(a,"name"))
 
 }
-
-//func (b BB)val(a AA,key string) BB {
-//	b.key = a.key
-//	return b
-//}
 

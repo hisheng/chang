@@ -12,5 +12,7 @@ show tables ;
 
 SELECT * FROM chang.symbol;
 
+SHOW CREATE TABLE chang.lirunbiao;
+
 
  
