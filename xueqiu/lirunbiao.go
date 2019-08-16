@@ -1,10 +1,9 @@
-package caiwu
+package xueqiu
 
 import (
 	"encoding/json"
 	"fmt"
 	"github.com/hisheng/chang/db"
-	"github.com/hisheng/chang/xueqiu"
 	"github.com/jinzhu/gorm"
 	"net/url"
 	"strconv"
@@ -112,22 +111,37 @@ func (l Lirunbiao_) getTableName() string {
 	return "lirunbiao"
 }
 
-func (l Lirunbiao_) createTable()  {
+func (l Lirunbiao_) CreateTable()  {
 	tableKey := l.getTableName()
 	if !db.DB.HasTable(tableKey) {
 		db.DB.Table(tableKey).Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&l)
+		db.DB.Table(tableKey).AddUniqueIndex(l.getTableName() +"symbol_gatherday", "symbol","gather_day")
 	}
 }
 
 
-func (l Lirunbiao_)Add(){
-	db.DB.Table(l.getTableName()).Create(&l)
+func (l Lirunbiao_)Add() Lirunbiao_{
+	is := l.FindOne()
+	if is.ID == 0 {
+		db.DB.Table(l.getTableName()).Create(&l)
+	}else {
+		return is
+	}
+	return l
+	//Exce 会释放连接池
+}
+
+func (l Lirunbiao_) FindOne() Lirunbiao_{
+	dbn := db.DB.Table(l.getTableName()).Where("symbol = ?",l.Symbol).Where("gather_day = ?",l.GatherDay)
+	dbn.First(&l)
+	return l
 }
 
 
 
 
-type LirunbiaoRequest_ xueqiu.Request_
+
+type LirunbiaoRequest_ Request_
 func (request LirunbiaoRequest_) initRequest(symbol string) LirunbiaoRequest_{
 	request.SearchUrl  = "https://stock.xueqiu.com/v5/stock/finance/cn/income.json"
 
@@ -143,7 +157,6 @@ func (request LirunbiaoRequest_) initRequest(symbol string) LirunbiaoRequest_{
 
 
 func (request LirunbiaoRequest_) Run (symbol string)  {
-	Lirunbiao.createTable()
 
 	request = request.initRequest(symbol)
 	fmt.Println(request.SearchParms.Get("type"))
@@ -157,7 +170,7 @@ func (request LirunbiaoRequest_) Run (symbol string)  {
 }
 
 func (request LirunbiaoRequest_) RunGet()  {
-	data := xueqiu.Get(request.SearchUrl,request.SearchParms)
+	data := Get(request.SearchUrl,request.SearchParms)
 
 	str:=[]byte(data)
 

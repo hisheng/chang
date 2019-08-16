@@ -1,10 +1,10 @@
-package caiwu
+package xueqiu
 
 import (
 	"encoding/json"
 	"fmt"
 	"github.com/hisheng/chang/db"
-	"github.com/hisheng/chang/xueqiu"
+	"github.com/jinzhu/gorm"
 	"net/url"
 	"strconv"
 	"time"
@@ -15,6 +15,7 @@ var Zichanfuzhai Zichanfuzhai_
 
 
 type Zichanfuzhai_ struct {
+	gorm.Model
 	Report_type string
 	Symbol string `sql:"type:varchar(20)"`
 	Report_name string //1546185600000
@@ -140,23 +141,39 @@ func (z Zichanfuzhai_) getTableName() string {
 	return "zichanfuzhai"
 }
 
-func (z Zichanfuzhai_) createTable()  {
+func (z Zichanfuzhai_) CreateTable()  {
 	tableKey := z.getTableName()
 	if !db.DB.HasTable(tableKey) {
 		db.DB.Table(tableKey).Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&z)
+		db.DB.Table(tableKey).AddUniqueIndex(z.getTableName() +"symbol_gatherday", "symbol","gather_day")
 	}
 }
 
 
-func (z Zichanfuzhai_)Add(){
-	db.DB.Table(z.getTableName()).Create(&z)
+
+
+func (z Zichanfuzhai_)Add() Zichanfuzhai_{
+	is := z.FindOne()
+	if is.ID == 0 {
+		db.DB.Table(z.getTableName()).Create(&z)
+	}else {
+		return is
+	}
+	return z
+	//Exce 会释放连接池
+}
+
+func (z Zichanfuzhai_) FindOne() Zichanfuzhai_{
+	dbn := db.DB.Table(z.getTableName()).Where("symbol = ?",z.Symbol).Where("gather_day = ?",z.GatherDay)
+	dbn.First(&z)
+	return z
 }
 
 
 
 
 
-type ZichanfuzhaiRequest_ xueqiu.Request_
+type ZichanfuzhaiRequest_ Request_
 func (request ZichanfuzhaiRequest_) initRequest(symbol string) ZichanfuzhaiRequest_{
 	request.SearchUrl  = "https://stock.xueqiu.com/v5/stock/finance/cn/balance.json"
 
@@ -175,7 +192,6 @@ func (request ZichanfuzhaiRequest_) initRequest(symbol string) ZichanfuzhaiReque
 
 
 func (request ZichanfuzhaiRequest_) Run (symbol string)  {
-	Zichanfuzhai.createTable()
 
 	request = request.initRequest(symbol)
 	fmt.Println(request.SearchParms.Get("type"))
@@ -192,7 +208,7 @@ func (request ZichanfuzhaiRequest_) Run (symbol string)  {
 
 
 func (request ZichanfuzhaiRequest_) RunGet()  {
-	data := xueqiu.Get(request.SearchUrl,request.SearchParms)
+	data := Get(request.SearchUrl,request.SearchParms)
 
 	str:=[]byte(data)
 
@@ -354,58 +370,58 @@ type  ZichanfuzhaiJsonDataItem struct{
 	Symbol string `sql:"type:varchar(20)"`
 	Report_name string //1546185600000
 	Report_date int  //"2018年报"
-	Currency_funds []float64 //货币资金
-	Ar_and_br []float64 //应收票据及应收账款
-	Bills_receivable []float64 //其中：应收票据
-	Account_receivable []float64 //应收账款
-	Pre_payment []float64 //预付款项
-	Othr_receivables []float64 //其他应收款
-	Inventory []float64 //存货
-	Othr_current_assets []float64 //其他流动资产
-	Total_current_assets []float64 //流动资产合计
-	Lt_receivable []float64 //长期应收款
-	Lt_equity_invest []float64 //长期股权投资
-	Other_illiquid_fnncl_assets []float64 //其他非流动金融资产
-	Invest_property []float64 //投资性房地产
-	Fixed_asset_sum []float64 //固定资产合计
-	Fixed_asset []float64 //其中：固定资产
-	Intangible_assets []float64 //无形资产
-	Lt_deferred_expense []float64 //长期待摊费用
-	Dt_assets []float64 //递延所得税资产
-	Othr_noncurrent_assets []float64 //其他非流动资产
-	Total_noncurrent_assets []float64 //非流动资产合计
-	Total_assets []float64 //资产合计
-	St_loan []float64 //短期借款
-	Derivative_fnncl_liab []float64 //衍生金融负债
-	Bp_and_ap []float64 //应付票据及应付账款
-	Bill_payable []float64 //应付票据
-	Accounts_payable []float64 //应付账款
-	Pre_receivable []float64 //预收款项
-	Contract_liabilities []float64 //合同负债
-	Payroll_payable []float64 //应付职工薪酬
-	Tax_payable []float64 //应交税费
-	Interest_payable []float64 //应付利息
-	Dividend_payable []float64 //应付股利
-	Othr_payables []float64 //其他应付款
-	Noncurrent_liab_due_in1y []float64 //一年内到期的非流动负债
-	Othr_current_liab []float64 //其他流动负债
-	Total_current_liab []float64 //流动负债合计
-	Lt_loan []float64 //长期借款
-	Bond_payable []float64 //应付债券
-	Lt_payable []float64 //长期应付款
-	Dt_liab []float64 //递延所得税负债
-	Total_noncurrent_liab []float64 //非流动负债合计
-	Total_liab []float64 //负债合计
-	Shares []float64 //实收资本(或股本)
-	Othr_equity_instruments []float64 //其他权益工具
-	Perpetual_bond []float64 //永续债
-	Capital_reserve []float64 //资本公积
-	Treasury_stock []float64 //减：库存股
-	Othr_compre_income []float64 //其他综合收益
-	Earned_surplus []float64 //盈余公积
-	Undstrbtd_profit []float64 //未分配利润
-	Total_quity_atsopc []float64 //归属于母公司股东权益合计
-	Minority_equity []float64 //少数股东权益
-	Total_holders_equity []float64 //股东权益合计
-	Total_liab_and_holders_equity []float64 //负债和股东权益总计
+	Currency_funds [2]float64 //货币资金
+	Ar_and_br [2]float64 //应收票据及应收账款
+	Bills_receivable [2]float64 //其中：应收票据
+	Account_receivable [2]float64 //应收账款
+	Pre_payment [2]float64 //预付款项
+	Othr_receivables [2]float64 //其他应收款
+	Inventory [2]float64 //存货
+	Othr_current_assets [2]float64 //其他流动资产
+	Total_current_assets [2]float64 //流动资产合计
+	Lt_receivable [2]float64 //长期应收款
+	Lt_equity_invest [2]float64 //长期股权投资
+	Other_illiquid_fnncl_assets [2]float64 //其他非流动金融资产
+	Invest_property [2]float64 //投资性房地产
+	Fixed_asset_sum [2]float64 //固定资产合计
+	Fixed_asset [2]float64 //其中：固定资产
+	Intangible_assets [2]float64 //无形资产
+	Lt_deferred_expense [2]float64 //长期待摊费用
+	Dt_assets [2]float64 //递延所得税资产
+	Othr_noncurrent_assets [2]float64 //其他非流动资产
+	Total_noncurrent_assets [2]float64 //非流动资产合计
+	Total_assets [2]float64 //资产合计
+	St_loan [2]float64 //短期借款
+	Derivative_fnncl_liab [2]float64 //衍生金融负债
+	Bp_and_ap [2]float64 //应付票据及应付账款
+	Bill_payable [2]float64 //应付票据
+	Accounts_payable [2]float64 //应付账款
+	Pre_receivable [2]float64 //预收款项
+	Contract_liabilities [2]float64 //合同负债
+	Payroll_payable [2]float64 //应付职工薪酬
+	Tax_payable [2]float64 //应交税费
+	Interest_payable [2]float64 //应付利息
+	Dividend_payable [2]float64 //应付股利
+	Othr_payables [2]float64 //其他应付款
+	Noncurrent_liab_due_in1y [2]float64 //一年内到期的非流动负债
+	Othr_current_liab [2]float64 //其他流动负债
+	Total_current_liab [2]float64 //流动负债合计
+	Lt_loan [2]float64 //长期借款
+	Bond_payable [2]float64 //应付债券
+	Lt_payable [2]float64 //长期应付款
+	Dt_liab [2]float64 //递延所得税负债
+	Total_noncurrent_liab [2]float64 //非流动负债合计
+	Total_liab [2]float64 //负债合计
+	Shares [2]float64 //实收资本(或股本)
+	Othr_equity_instruments [2]float64 //其他权益工具
+	Perpetual_bond [2]float64 //永续债
+	Capital_reserve [2]float64 //资本公积
+	Treasury_stock [2]float64 //减：库存股
+	Othr_compre_income [2]float64 //其他综合收益
+	Earned_surplus [2]float64 //盈余公积
+	Undstrbtd_profit [2]float64 //未分配利润
+	Total_quity_atsopc [2]float64 //归属于母公司股东权益合计
+	Minority_equity [2]float64 //少数股东权益
+	Total_holders_equity [2]float64 //股东权益合计
+	Total_liab_and_holders_equity [2]float64 //负债和股东权益总计
 }

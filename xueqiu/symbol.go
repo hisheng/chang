@@ -31,6 +31,8 @@ func (s Symbol_) createTable()  {
 	tableKey := s.getTableName()
 	if !db.DB.HasTable(tableKey) {
 		db.DB.Table(tableKey).Set("gorm:table_options", "ENGINE=InnoDB").CreateTable(&s)
+		db.DB.Table(tableKey).AddUniqueIndex(s.getTableName() +"symbol", "symbol")
+		//db.DB.Table(tableKey).AddUniqueIndex(s.getTableName() +"symbol", "symbol")
 	}
 }
 
@@ -45,6 +47,8 @@ func (s Symbol_)Add() Symbol_{
 	is := s.FindOne(s.Symbol)
 	if is.ID == 0 {
 		db.DB.Table(s.getTableName()).Create(&s)
+	}else {
+		return is
 	}
 	return s
 }
