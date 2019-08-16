@@ -157,11 +157,11 @@ func (z Zichanfuzhai_)Add(){
 
 
 type ZichanfuzhaiRequest_ xueqiu.Request_
-func (request ZichanfuzhaiRequest_) initRequest() ZichanfuzhaiRequest_{
+func (request ZichanfuzhaiRequest_) initRequest(symbol string) ZichanfuzhaiRequest_{
 	request.SearchUrl  = "https://stock.xueqiu.com/v5/stock/finance/cn/balance.json"
 
 	request.SearchParms = url.Values{}
-	request.SearchParms.Add("symbol","SH601155")
+	request.SearchParms.Add("symbol",symbol)
 	request.SearchParms.Add("type","all")
 	request.SearchParms.Add("is_detail","true")
 	request.SearchParms.Add("count","20")
@@ -174,13 +174,15 @@ func (request ZichanfuzhaiRequest_) initRequest() ZichanfuzhaiRequest_{
 
 
 
-func (request ZichanfuzhaiRequest_) Run ()  {
+func (request ZichanfuzhaiRequest_) Run (symbol string)  {
 	Zichanfuzhai.createTable()
 
-	request = request.initRequest()
+	request = request.initRequest(symbol)
 	fmt.Println(request.SearchParms.Get("type"))
 
 	for i:= 1;i<=4;i++ {
+		fmt.Println("ZichanfuzhaiRequest_ "+ symbol + " Q" + strconv.Itoa(i))
+
 		request.SearchParms.Set("type","Q"+strconv.Itoa(i))  //Q1代表一季度
 		//fmt.Println(request)
 		request.RunGet()

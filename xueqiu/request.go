@@ -8,6 +8,7 @@ import (
 	"net/url"
 )
 
+var XueqiuRequest  Request_
 
 type Request_ struct {
 	SearchUrl string

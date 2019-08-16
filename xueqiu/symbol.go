@@ -4,21 +4,21 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/hisheng/chang/db"
+	"github.com/jinzhu/gorm"
 	"net/url"
+	"strconv"
 )
 
 var Symbol Symbol_
 
 type Symbol_ struct {
+	gorm.Model
 	Symbol string
-	Pct float64 //当日涨幅
-	Volume float64 //本日交易量
-	Current float64 //当前价格
-	Mc float64 //市值
 	Name string //names
 	Exchange string //市场范围
 	Type int
 	Areacode string //地区
+	Area_name string //地区
 	Tick_size float64
 	Indcode string
 }
@@ -34,9 +34,27 @@ func (s Symbol_) createTable()  {
 	}
 }
 
-func (s Symbol_)Add(){
-	db.DB.Table(s.getTableName()).Create(&s)
+
+func (s Symbol_) Gets() (ss []Symbol_){
+	db.DB.Table(s.getTableName()).Find(&ss)
+	return ss
 }
+
+
+func (s Symbol_)Add() Symbol_{
+	is := s.FindOne(s.Symbol)
+	if is.ID == 0 {
+		db.DB.Table(s.getTableName()).Create(&s)
+	}
+	return s
+}
+
+func (s Symbol_) FindOne(symbol string) Symbol_{
+	dbn := db.DB.Table(s.getTableName()).Where("symbol = ?",symbol)
+	dbn.First(&s)
+	return s
+}
+
 
 type SymbolRequest_ Request_
 
@@ -55,7 +73,7 @@ func (request SymbolRequest_)initRequest() SymbolRequest_{
 	request.SearchParms.Add("order_by","mc")
 	request.SearchParms.Add("order","desc")
 	request.SearchParms.Add("page","1")
-	request.SearchParms.Add("size","3800")
+	request.SearchParms.Add("size","5000")
 	request.SearchParms.Add("only_count","0")
 	return request
 
@@ -79,6 +97,8 @@ func (s SymbolRequest_) Run ()  {
 		fmt.Println(err)
 	}
 	for _,symbol := range rs.Data.List{
+		i,_:=strconv.Atoi(symbol.Areacode)
+		symbol.Area_name = Areas[i]
 		symbol.Add()
 	}
 }

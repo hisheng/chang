@@ -125,11 +125,11 @@ type XianjinliuPercent struct {
 
 
 type XianjinliuRequest_ xueqiu.Request_
-func (request XianjinliuRequest_) initRequest() XianjinliuRequest_{
+func (request XianjinliuRequest_) initRequest(symbol string) XianjinliuRequest_{
 	request.SearchUrl  = "https://stock.xueqiu.com/v5/stock/finance/cn/cash_flow.json"
 
 	request.SearchParms = url.Values{}
-	request.SearchParms.Add("symbol","SH601155")
+	request.SearchParms.Add("symbol",symbol)
 	request.SearchParms.Add("type","all")
 	request.SearchParms.Add("is_detail","true")
 	request.SearchParms.Add("count","20")
@@ -142,13 +142,15 @@ func (request XianjinliuRequest_) initRequest() XianjinliuRequest_{
 
 
 
-func (request XianjinliuRequest_) Run ()  {
+func (request XianjinliuRequest_) Run (symbol string)  {
 	Xianjinliu.createTable()
 
-	request = request.initRequest()
+	request = request.initRequest(symbol)
 	fmt.Println(request.SearchParms.Get("type"))
 
 	for i:= 1;i<=4;i++ {
+		fmt.Println("XianjinliuRequest_ "+ symbol + " Q" + strconv.Itoa(i))
+
 		request.SearchParms.Set("type","Q"+strconv.Itoa(i))  //Q1代表一季度
 		request.RunGet()
 	}

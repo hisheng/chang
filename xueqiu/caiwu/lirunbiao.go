@@ -128,11 +128,11 @@ func (l Lirunbiao_)Add(){
 
 
 type LirunbiaoRequest_ xueqiu.Request_
-func (request LirunbiaoRequest_) initRequest() LirunbiaoRequest_{
+func (request LirunbiaoRequest_) initRequest(symbol string) LirunbiaoRequest_{
 	request.SearchUrl  = "https://stock.xueqiu.com/v5/stock/finance/cn/income.json"
 
 	request.SearchParms = url.Values{}
-	request.SearchParms.Add("symbol","SH601155")
+	request.SearchParms.Add("symbol",symbol)
 	request.SearchParms.Add("type","all")
 	request.SearchParms.Add("is_detail","true")
 	request.SearchParms.Add("count","20")
@@ -142,13 +142,14 @@ func (request LirunbiaoRequest_) initRequest() LirunbiaoRequest_{
 
 
 
-func (request LirunbiaoRequest_) Run ()  {
+func (request LirunbiaoRequest_) Run (symbol string)  {
 	Lirunbiao.createTable()
 
-	request = request.initRequest()
+	request = request.initRequest(symbol)
 	fmt.Println(request.SearchParms.Get("type"))
 
 	for i:= 1;i<=4;i++ {
+		fmt.Println("LirunbiaoRequest_ "+ symbol + " Q" + strconv.Itoa(i))
 		request.SearchParms.Set("type","Q"+strconv.Itoa(i))  //Q1代表一季度
 		request.RunGet()
 	}
@@ -269,40 +270,40 @@ type  LirunbiaoJsonData struct{
 type  LirunbiaoJsonDataItem struct{
 	Report_name string //1546185600000
 	Report_date int  //"2018年报"
-	Total_revenue []float64  //营业总收入
-	Revenue []float64 //营业收入
-	Op []float64 //营业利润
-	Non_operating_income []float64 //加：营业外收入
-	Non_operating_payout []float64 //减：营业外支出
-	Profit_total_amt []float64  //利润总额
-	Income_tax_expenses []float64 //减：所得税费用
-	Net_profit []float64 //净利润
-	Continous_operating_np []float64 //（一）持续经营净利润
-	Net_profit_atsopc []float64 //归属于母公司所有者的净利润
-	Minority_gal []float64 //少数股东损益
-	Net_profit_after_nrgal_atsolc []float64 //扣除非经常性损益后的净利润
-	Basic_eps []float64  //基本每股收益
-	Dlt_earnings_per_share []float64 //稀释每股收益
-	Othr_compre_income []float64 //其他综合收益
-	Othr_compre_income_atoopc []float64 //归属母公司所有者的其他综合收益
-	Total_compre_income []float64 //综合收益总额
-	Total_compre_income_atsopc []float64 //归属于母公司股东的综合收益总额
-	Total_compre_income_atms []float64 //归属于少数股东的综合收益总额
-	Operating_costs []float64 //营业总成本
-	Operating_cost []float64  //营业成本
-	Operating_taxes_and_surcharge []float64 //营业税金及附加
-	Sales_fee []float64 //销售费用
-	Manage_fee []float64  //管理费用
-	Financing_expenses []float64 //财务费用
-	Finance_cost_interest_fee []float64 //利息费用
-	Finance_cost_interest_income []float64 //利息收入
-	Asset_impairment_loss []float64  //资产减值损失
-	Credit_impairment_loss []float64 //信用减值损失
-	Income_from_chg_in_fv  []float64 //加：公允价值变动收益
-	Invest_income []float64    //投资收益
-	Invest_incomes_from_rr []float64 //其中：对联营企业和合营企业的投资收益
-	Asset_disposal_income []float64 //资产处置收益
-	Other_income []float64  //其他收益
+	Total_revenue [2]float64  //营业总收入
+	Revenue [2]float64 //营业收入
+	Op [2]float64 //营业利润
+	Non_operating_income [2]float64 //加：营业外收入
+	Non_operating_payout [2]float64 //减：营业外支出
+	Profit_total_amt [2]float64  //利润总额
+	Income_tax_expenses [2]float64 //减：所得税费用
+	Net_profit [2]float64 //净利润
+	Continous_operating_np [2]float64 //（一）持续经营净利润
+	Net_profit_atsopc [2]float64 //归属于母公司所有者的净利润
+	Minority_gal [2]float64 //少数股东损益
+	Net_profit_after_nrgal_atsolc [2]float64 //扣除非经常性损益后的净利润
+	Basic_eps [2]float64  //基本每股收益
+	Dlt_earnings_per_share [2]float64 //稀释每股收益
+	Othr_compre_income [2]float64 //其他综合收益
+	Othr_compre_income_atoopc [2]float64 //归属母公司所有者的其他综合收益
+	Total_compre_income [2]float64 //综合收益总额
+	Total_compre_income_atsopc [2]float64 //归属于母公司股东的综合收益总额
+	Total_compre_income_atms [2]float64 //归属于少数股东的综合收益总额
+	Operating_costs [2]float64 //营业总成本
+	Operating_cost [2]float64  //营业成本
+	Operating_taxes_and_surcharge [2]float64 //营业税金及附加
+	Sales_fee [2]float64 //销售费用
+	Manage_fee [2]float64  //管理费用
+	Financing_expenses [2]float64 //财务费用
+	Finance_cost_interest_fee [2]float64 //利息费用
+	Finance_cost_interest_income [2]float64 //利息收入
+	Asset_impairment_loss [2]float64  //资产减值损失
+	Credit_impairment_loss [2]float64 //信用减值损失
+	Income_from_chg_in_fv  [2]float64 //加：公允价值变动收益
+	Invest_income [2]float64    //投资收益
+	Invest_incomes_from_rr [2]float64 //其中：对联营企业和合营企业的投资收益
+	Asset_disposal_income [2]float64 //资产处置收益
+	Other_income [2]float64  //其他收益
 }
 
 
