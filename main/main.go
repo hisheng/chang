@@ -1,21 +1,20 @@
 package main
 
 import (
+	"fmt"
 	"github.com/hisheng/chang/conf"
 	"github.com/hisheng/chang/db"
-	"github.com/hisheng/chang/xueqiu"
 )
 
 func init()  {
-	conf.Conf.Init()
-	conf.XueqiuCookie.Init()
+	conf.InitConf()
 	db.GetDb()
 }
 
 func main()  {
 
-
-	xueqiu.InitData()
+	fmt.Println("s")
+	//xueqiu.InitData()
 	//xueqiu.StockSummaryModel.Run()
 	//xueqiu.StockChartModel.Run()
 	//caiwu.LirunbiaoRequest.Run()
