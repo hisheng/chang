@@ -13,6 +13,8 @@ func init()  {
 }
 
 func main()  {
+
+
 	xueqiu.InitData()
 	//xueqiu.StockSummaryModel.Run()
 	//xueqiu.StockChartModel.Run()
