@@ -81,7 +81,7 @@ func (s StockChart) FindOne() StockChart{
 
 type StockChartRequest_ Request_
 
-func (request StockChartRequest_) initRequest(symbol string) StockChartRequest_{
+func (request StockChartRequest_) initRequest(symbol,day string) StockChartRequest_{
 
 	request.SearchUrl  = "https://stock.xueqiu.com/v5/stock/chart/kline.json"
 
@@ -92,15 +92,20 @@ func (request StockChartRequest_) initRequest(symbol string) StockChartRequest_{
 	request.SearchParms.Add("begin",strconv.FormatInt(now,10)+"000")
 	request.SearchParms.Add("period","day")
 	request.SearchParms.Add("type","before")
-	request.SearchParms.Add("count","-10000")
+	count := "10000"
+	if len(day) > 0{
+		count = day
+	}
+	request.SearchParms.Add("count","-"+count) //往前多少天的数据
+
 	request.SearchParms.Add("indicator","kline,pe,pb,ps,pcf,market_capital,agt,ggt,balance")
 	return request
 
 }
 
 
-func (request StockChartRequest_) Run (symbol string)  {
-	request = request.initRequest(symbol)
+func (request StockChartRequest_) Run (symbol string,day string)  {
+	request = request.initRequest(symbol,day)
 	data := Get(request.SearchUrl,request.SearchParms)
 
 

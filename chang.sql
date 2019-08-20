@@ -21,4 +21,8 @@ select a.symbol,a.close,a.pe,a.pb,a.ps,a.gather_day from chang.stock_chart a lef
  where gather_day = '2019-08-09' and a.pe=b.pe;
 
 
-select symbol,close,pe,pb,ps,gather_day from chang.stock_chart   where symbol = 'SH601155' order by pe asc
+select symbol,close,pe,pb,ps,gather_day from chang.stock_chart   where symbol = 'SH601155' order by pe asc;
+
+explain select * from chang.stock_chart;
+
+select COUNT(1) from chang.stock_chart

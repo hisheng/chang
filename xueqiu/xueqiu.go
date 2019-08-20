@@ -14,6 +14,14 @@ func InitData()  {
 		go XianjinliuRequest.Run(s.Symbol)
 		go LirunbiaoRequest.Run(s.Symbol)
 		go ZichanfuzhaiRequest.Run(s.Symbol)
-		StockChartRequest.Run(s.Symbol)
+		StockChartRequest.Run(s.Symbol,"")
+	}
+}
+
+func UpdateData()  {
+	ss := Symbol.Gets()
+	for _,s := range ss{
+		fmt.Println(s)
+		StockChartRequest.Run(s.Symbol,"10")
 	}
 }
