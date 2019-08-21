@@ -19,6 +19,8 @@ func InitData()  {
 }
 
 func UpdateData()  {
+	SymbolRequest.Run()
+
 	ss := Symbol.Gets()
 	for _,s := range ss{
 		fmt.Println(s)

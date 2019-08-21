@@ -77,7 +77,7 @@ func (request SymbolRequest_)initRequest() SymbolRequest_{
 	request.SearchParms.Add("order_by","mc")
 	request.SearchParms.Add("order","desc")
 	request.SearchParms.Add("page","1")
-	request.SearchParms.Add("size","5000")
+	request.SearchParms.Add("size","6000")
 	request.SearchParms.Add("only_count","0")
 	return request
 

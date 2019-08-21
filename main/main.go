@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/hisheng/chang/conf"
 	"github.com/hisheng/chang/db"
+	"github.com/hisheng/chang/moni"
 	"github.com/hisheng/chang/xueqiu"
 	"github.com/robfig/cron"
 )
@@ -37,6 +38,8 @@ func init()  {
 func main()  {
 
 	fmt.Println("chang start")
+
+	go moni.AddmoniGroup1("2019-08-20")
 	//xueqiu.InitData()
 	//xueqiu.StockSummaryModel.Run()
 	//xueqiu.StockChartModel.Run()
