@@ -38,8 +38,9 @@ func init()  {
 func main()  {
 
 	fmt.Println("chang start")
+	go moni.Init()
 
-	go moni.AddmoniGroup1("2019-08-20")
+	//go moni.AddmoniGroup1("2019-08-20")
 	//xueqiu.InitData()
 	//xueqiu.StockSummaryModel.Run()
 	//xueqiu.StockChartModel.Run()

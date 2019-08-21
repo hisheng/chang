@@ -36,7 +36,7 @@ SHOW CREATE TABLE chang.lirunbiao;
 
 /* 检查 2019-08-09 pe 创新低的 股票*/
 select a.symbol,a.close,a.pe,a.pb,a.ps,a.gather_day from chang.stock_chart a left join
-              (select symbol,  min(pe) as pe from chang.stock_chart where pe > 1 group by symbol) b on a.symbol = b.symbol
+              (select symbol,  min(pe) as pe from chang.stock_chart where pe > 1 and gather_day <= '2019-07-22' group by symbol) b on a.symbol = b.symbol
  where gather_day = '2019-07-22' and a.pe=b.pe;
 
 
@@ -67,3 +67,10 @@ select COUNT(1) from chang.stock_chart;
 select * from chang.stock_chart;
 
 
+
+/*查看 模拟交易的 日期 到 今天的 股价 增长幅度对比 */
+select a.symbol,a.start_price,close,(close-start_price)/start_price
+from chang.stock_chart right join
+    (select symbol,start_price from chang.moni where chang.moni.gather_day = '2019-08-20') a
+on a.symbol = chang.stock_chart.symbol
+where chang.stock_chart.gather_day = '2019-08-20';

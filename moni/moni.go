@@ -5,10 +5,13 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+var Moni Moni_
+
 type Moni_ struct {
 	gorm.Model
 	Symbol,Name,Desc string
 	Start_price float64
+	Pe,Pb,Ps float64
 	GatherDay string
 	Group_code int
 	Group_name string
