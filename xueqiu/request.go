@@ -54,5 +54,6 @@ func createTable()  {
 	Zichanfuzhai.CreateTable()
 	Xianjinliu.CreateTable()
 	StockChartModel.CreateTable()
+	StockQuote.CreateTable()
 }
 

@@ -19,11 +19,13 @@ func InitData()  {
 }
 
 func UpdateData()  {
+	createTable()
 	SymbolRequest.Run()
 
 	ss := Symbol.Gets()
 	for _,s := range ss{
 		fmt.Println(s)
 		StockChartRequest.Run(s.Symbol,"10")
+		go StockQuoteRequest.Run(s.Symbol)
 	}
 }

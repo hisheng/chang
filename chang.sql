@@ -61,6 +61,19 @@ select symbol,close,pe from stock_chart where symbol = "SZ300778";
 
 select symbol,close,pe,pb,ps,gather_day from chang.stock_chart   where symbol = 'SH601155' and  pe > 1 order by pe asc;
 
+/*月份波动规律*/
+select symbol,avg(pb) as "平均pb",DATE_FORMAT(gather_day,'%m') as "月份" from chang.stock_chart   where symbol = 'SZ000002' and  pe > 1 group by DATE_FORMAT(gather_day,'%m');
+
+select symbol,avg(pe) as "平均pb",DATE_FORMAT(gather_day,'%Y') as "年份" from chang.stock_chart   where symbol = 'SH601155' and  pe > 1 group by DATE_FORMAT(gather_day,'%Y');
+
+
+select symbol,avg(pb) as "平均pb",DATE_FORMAT(gather_day,'%Y') as "年份" ,DATE_FORMAT(gather_day,'%m') as "月份"
+from chang.stock_chart  where symbol = 'SH600606' and  pe > 1
+group by DATE_FORMAT(gather_day,'%Y') ,DATE_FORMAT(gather_day,'%m');
+
+
+
+
 explain select * from chang.stock_chart;
 
 select COUNT(1) from chang.stock_chart;
@@ -69,8 +82,25 @@ select * from chang.stock_chart;
 
 
 /*查看 模拟交易的 日期 到 今天的 股价 增长幅度对比 */
-select a.symbol,a.start_price,close,(close-start_price)/start_price
+select a.symbol,a.start_price,close,(close-start_price)/start_price as "盈利",
+       a.start_pe ,pe
 from chang.stock_chart right join
-    (select symbol,start_price from chang.moni where chang.moni.gather_day = '2019-08-20') a
+     (select symbol,start_price,pe as "start_pe" from chang.moni where chang.moni.gather_day = '2019-01-16') a
+     on a.symbol = chang.stock_chart.symbol
+where chang.stock_chart.gather_day = '2019-08-21';
+
+
+
+select (sum(p) -1.5)/12 from (
+select a.symbol,a.start_price,close,(close-start_price)/start_price as p
+from chang.stock_chart right join
+    (select symbol,start_price from chang.moni where chang.moni.gather_day = '2019-07-02') a
 on a.symbol = chang.stock_chart.symbol
-where chang.stock_chart.gather_day = '2019-08-20';
+where chang.stock_chart.gather_day = '2019-08-20') b;
+
+SELECT * FROM chang.moni order by id  desc ;
+SELECT * FROM chang.moni where symbol = 'SH601155'  order by id  desc ;
+
+SELECT * FROM stock_quote  order by id  desc ;
+SELECT * FROM stock_quote where symbol = 'SH601155' order by id  desc ;
+

@@ -22,22 +22,22 @@ type StockChart struct {
 	gorm.Model
 	Symbol string `sql:"type:varchar(20)"`
 	Timestamp float64
-	Volume float64
-	Open float64   `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
-	High float64  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
-	Low float64   `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
-	Close float64  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
-	Chg float64  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
-	Percent float64  `sql:"type:decimal(10,2) DEFAULT '0.00' "`
+	Volume float64 //成交量 多少股(100股一手)
+	Open float64   `sql:"type:decimal(10,4) DEFAULT '0.0000' "`  //开盘价
+	High float64  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`  //最高点
+	Low float64   `sql:"type:decimal(10,4) DEFAULT '0.0000' "` //最低点
+	Close float64  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`  //收盘价
+	Chg float64  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`   //股价变动
+	Percent float64  `sql:"type:decimal(10,2) DEFAULT '0.00' "`  //股东变动幅度
 	Turnoverrate float64  `sql:"type:decimal(10,2) DEFAULT '0.00' "`
-	Amount float64
+	Amount float64   //成交额
 	VolumePost float64 `json:"volume_post"`
 	AmountPost float64 `json:"amount_post"`
 	Pe float64  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
 	Pb float64  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
 	Ps float64  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
 	Pcf float64  `sql:"type:decimal(10,4) DEFAULT '0.0000' "`
-	MarketCapital float64  `sql:"type:decimal(20,2) DEFAULT '0.00' "`
+	MarketCapital float64  `sql:"type:decimal(20,2) DEFAULT '0.00' "`  //市值
 	Balance float64   `sql:"type:decimal(20,2) DEFAULT '0.00' "`
 	GatherDay string  `gorm:"column:gather_day" sql:"type:date"`
 }
