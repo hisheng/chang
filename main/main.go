@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/hisheng/chang/conf"
 	"github.com/hisheng/chang/db"
-	"github.com/hisheng/chang/moni"
 	"github.com/hisheng/chang/xueqiu"
 	"github.com/robfig/cron"
 )
@@ -24,7 +23,7 @@ var (
 	CRON  *cron.Cron
 	everyMinuteFifteenSecond = "15 * * * * *"
 	everyFourSecond = "*/4 * * * * *"
-	everyDay = "4 21 17 * * *"
+	everyDay = "4 21 16 * * *"
 )
 
 
@@ -37,7 +36,6 @@ func init()  {
 
 func main()  {
 	fmt.Println("chang start")
-	go moni.Init()
 
 	//go moni.AddmoniGroup1("2019-08-20")
 	//xueqiu.InitData()
@@ -63,7 +61,7 @@ func main()  {
 
 
 	CRON.AddFunc(everyDay, func() {
-		xueqiu.UpdateData()
+		go xueqiu.UpdateData()
 	})
 
 

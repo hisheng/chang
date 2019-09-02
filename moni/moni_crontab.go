@@ -27,7 +27,7 @@ func AddmoniGroup1(gatherDay string)  {
 }
 
 func Init()  {
-	for i:=626;i<=5000;i++ {
+	for i:=4349;i<=5000;i++ {
 		yt := beforeToday(i)
 		if isWorkDay(yt) {
 			AddmoniGroup1(yt.String()[:10])

@@ -11,21 +11,37 @@ func InitData()  {
 
 	for _,s := range ss{
 		fmt.Println(s)
-		go XianjinliuRequest.Run(s.Symbol)
-		go LirunbiaoRequest.Run(s.Symbol)
-		go ZichanfuzhaiRequest.Run(s.Symbol)
+		go XianjinliuRequest.InitRun(s.Symbol)
+		go LirunbiaoRequest.InitRun(s.Symbol)
+		go ZichanfuzhaiRequest.InitRun(s.Symbol)
 		StockChartRequest.Run(s.Symbol,"")
 	}
 }
 
 func UpdateData()  {
 	createTable()
-	SymbolRequest.Run()
+	
+	updateSymbol();
 
 	ss := Symbol.Gets()
 	for _,s := range ss{
 		fmt.Println(s)
-		StockChartRequest.Run(s.Symbol,"10")
-		go StockQuoteRequest.Run(s.Symbol)
+		updateStock(s.Symbol)
+		updateCaiwuBaobiao(s.Symbol)
 	}
+}
+
+func updateSymbol()  {
+	SymbolRequest.Run()
+}
+
+func updateStock(symbol string)  {
+	StockChartRequest.Run(symbol,"10")
+	go StockQuoteRequest.Run(symbol)
+}
+
+func updateCaiwuBaobiao(symbol string)  {
+	XianjinliuRequest.Update(symbol)
+	LirunbiaoRequest.Update(symbol)
+	ZichanfuzhaiRequest.Upadte(symbol)
 }

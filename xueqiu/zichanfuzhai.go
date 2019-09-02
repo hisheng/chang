@@ -174,14 +174,14 @@ func (z Zichanfuzhai_) FindOne() Zichanfuzhai_{
 
 
 type ZichanfuzhaiRequest_ Request_
-func (request ZichanfuzhaiRequest_) initRequest(symbol string) ZichanfuzhaiRequest_{
+func (request ZichanfuzhaiRequest_) initRequest(symbol ,count string) ZichanfuzhaiRequest_{
 	request.SearchUrl  = "https://stock.xueqiu.com/v5/stock/finance/cn/balance.json"
 
 	request.SearchParms = url.Values{}
 	request.SearchParms.Add("symbol",symbol)
 	request.SearchParms.Add("type","all")
 	request.SearchParms.Add("is_detail","true")
-	request.SearchParms.Add("count","20")
+	request.SearchParms.Add("count",count)
 	request.SearchParms.Add("timestamp","")
 	return request
 }
@@ -191,9 +191,9 @@ func (request ZichanfuzhaiRequest_) initRequest(symbol string) ZichanfuzhaiReque
 
 
 
-func (request ZichanfuzhaiRequest_) Run (symbol string)  {
+func (request ZichanfuzhaiRequest_) Run (symbol,count string)  {
 
-	request = request.initRequest(symbol)
+	request = request.initRequest(symbol,count)
 	fmt.Println(request.SearchParms.Get("type"))
 
 	for i:= 1;i<=4;i++ {
@@ -205,6 +205,16 @@ func (request ZichanfuzhaiRequest_) Run (symbol string)  {
 	}
 
 }
+
+func (request ZichanfuzhaiRequest_) Upadte (symbol string)  {
+	request.Run(symbol,"2")
+}
+
+func (request ZichanfuzhaiRequest_) InitRun (symbol string)  {
+	request.Run(symbol,"20")
+}
+
+
 
 
 func (request ZichanfuzhaiRequest_) RunGet()  {

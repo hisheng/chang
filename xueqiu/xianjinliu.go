@@ -144,14 +144,14 @@ type XianjinliuPercent struct {
 
 
 type XianjinliuRequest_ Request_
-func (request XianjinliuRequest_) initRequest(symbol string) XianjinliuRequest_{
+func (request XianjinliuRequest_) initRequest(symbol string,count string) XianjinliuRequest_{
 	request.SearchUrl  = "https://stock.xueqiu.com/v5/stock/finance/cn/cash_flow.json"
 
 	request.SearchParms = url.Values{}
 	request.SearchParms.Add("symbol",symbol)
 	request.SearchParms.Add("type","all")
 	request.SearchParms.Add("is_detail","true")
-	request.SearchParms.Add("count","20")
+	request.SearchParms.Add("count",count)
 	request.SearchParms.Add("timestamp","")
 	return request
 }
@@ -160,10 +160,13 @@ func (request XianjinliuRequest_) initRequest(symbol string) XianjinliuRequest_{
 
 
 
+func (request XianjinliuRequest_) InitRun (symbol string)  {
+	request.Run(symbol,"20")
+}
 
-func (request XianjinliuRequest_) Run (symbol string)  {
 
-	request = request.initRequest(symbol)
+func (request XianjinliuRequest_) Run (symbol string,count string)  {
+	request = request.initRequest(symbol,count)
 	fmt.Println(request.SearchParms.Get("type"))
 
 	for i:= 1;i<=4;i++ {
@@ -175,7 +178,9 @@ func (request XianjinliuRequest_) Run (symbol string)  {
 
 }
 
-
+func (request XianjinliuRequest_) Update(symbol string)  {
+	request.Run(symbol,"2")
+}
 
 func (request XianjinliuRequest_) RunGet()  {
 	data := Get(request.SearchUrl,request.SearchParms)
