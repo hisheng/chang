@@ -101,7 +101,7 @@ left join(
 ) a on a.year = b.year and a.symbol = b.symbol
 ;
 
-
+select * from symbol where symbol = 'SH600346';
 
 
 explain select * from chang.stock_chart;

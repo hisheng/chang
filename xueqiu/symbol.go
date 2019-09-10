@@ -71,6 +71,8 @@ func (s Symbol_)Add() Symbol_{
 		is.Name = s.Name
 		is.Areacode = s.Areacode
 		is.Area_name = s.Area_name
+		is.Stock_abbr = s.Stock_abbr
+		is.Stock_pinyin = s.Stock_pinyin
 		db.DB.Table(s.getTableName()).Save(&is)
 	}
 	return s
