@@ -37,6 +37,8 @@ func init()  {
 func main()  {
 	fmt.Println("chang start")
 
+
+
 	//go moni.AddmoniGroup1("2019-08-20")
 	//xueqiu.InitData()
 	//xueqiu.StockSummaryModel.Run()
@@ -48,7 +50,12 @@ func main()  {
 	//caiwu.XianjinliuRequest.Run()
 	//caiwu.ZichanfuzhaiRequest.Run()
 
+	go xueqiu.UpdateData()
+	select {
 
+	}
+
+	return
 	//fmt.Println(b.val(a,"name"))
 
 	CRON = cron.New()

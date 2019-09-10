@@ -183,6 +183,10 @@ func (request XianjinliuRequest_) Update(symbol string)  {
 }
 
 func (request XianjinliuRequest_) RunGet()  {
+	//检查数据是否已经存储到 数据库，如果是的话，就不run get 了
+	//xianjinliu := Xianjinliu_{Symbol:request.SearchParms.Get("symbol"),Report_type:request.SearchParms.Get("type")}
+
+	//run
 	data := Get(request.SearchUrl,request.SearchParms)
 
 	str:=[]byte(data)

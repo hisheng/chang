@@ -27,7 +27,7 @@ func UpdateData()  {
 	for _,s := range ss{
 		fmt.Println(s)
 		updateStock(s.Symbol)
-		updateCaiwuBaobiao(s.Symbol)
+		UpdateCaiwuBaobiao(s.Symbol)
 	}
 }
 
@@ -40,7 +40,7 @@ func updateStock(symbol string)  {
 	go StockQuoteRequest.Run(symbol)
 }
 
-func updateCaiwuBaobiao(symbol string)  {
+func UpdateCaiwuBaobiao(symbol string)  {
 	XianjinliuRequest.Update(symbol)
 	LirunbiaoRequest.Update(symbol)
 	ZichanfuzhaiRequest.Upadte(symbol)

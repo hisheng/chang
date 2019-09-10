@@ -88,14 +88,18 @@ where gather_day = '2010-01-06') c where end_price is not  null) d group by perc
 
 
 /*月份波动规律*/
-select symbol,avg(pb) as "平均pb",DATE_FORMAT(gather_day,'%m') as "月份" from chang.stock_chart   where symbol = 'SZ000002' and  pe > 1 group by DATE_FORMAT(gather_day,'%m');
+select symbol,avg(pb) as "平均pb",DATE_FORMAT(gather_day,'%m') as "月份" from chang.stock_chart   where symbol = 'SZ000002' and  pe > 1  and  gather_day<= '2019-02-01' group by DATE_FORMAT(gather_day,'%m');
 
 select symbol,avg(pe) as "平均pb",DATE_FORMAT(gather_day,'%Y') as "年份" from chang.stock_chart   where symbol = 'SH601155' and  pe > 1 group by DATE_FORMAT(gather_day,'%Y');
 
-
-select symbol,avg(pe) as "平均pe",DATE_FORMAT(gather_day,'%Y') as "年份" ,DATE_FORMAT(gather_day,'%m') as "月份"
-from chang.stock_chart  where symbol = 'SH601155' and  pe > 1
-group by DATE_FORMAT(gather_day,'%Y') ,DATE_FORMAT(gather_day,'%m');
+select a.symbol,pe,a.year,month,yearpe,(pe - yearpe) from (
+select symbol,avg(pe) as pe,DATE_FORMAT(gather_day,'%Y') as year ,DATE_FORMAT(gather_day,'%m') as month from chang.stock_chart
+where symbol = 'SH601155' and  pe > 1
+group by DATE_FORMAT(gather_day,'%Y') ,DATE_FORMAT(gather_day,'%m')) b
+left join(
+    select symbol,avg(pe) as yearpe,DATE_FORMAT(gather_day,'%Y') as year from chang.stock_chart where symbol = 'SH601155' and  pe > 1 group by DATE_FORMAT(gather_day,'%Y')
+) a on a.year = b.year and a.symbol = b.symbol
+;
 
 
 
@@ -103,7 +107,15 @@ group by DATE_FORMAT(gather_day,'%Y') ,DATE_FORMAT(gather_day,'%m');
 explain select * from chang.stock_chart;
 
 select COUNT(1) from chang.stock_chart;
-select * from chang.stock_chart;
+select * from chang.stock_chart order by id desc ;
+
+
+
+select * from symbol
+left join stock_chart on symbol.symbol = stock_chart.symbol
+where areacode = 320000 and stock_chart.gather_day = '2019-09-05'
+order by market_capital desc ;
+
 
 
 

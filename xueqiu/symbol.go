@@ -43,12 +43,20 @@ func (s Symbol_) Gets() (ss []Symbol_){
 }
 
 
+//因为name 和 area_name 和注册地 有可能会变化，所以有的时候 是修改
 func (s Symbol_)Add() Symbol_{
+	//处理名字前缀XD
+	if s.Name[:2] == "XD"{
+		s.Name = s.Name[2:]
+	}
 	is := s.FindOne(s.Symbol)
 	if is.ID == 0 {
 		db.DB.Table(s.getTableName()).Create(&s)
 	}else {
-		return is
+		is.Name = s.Name
+		is.Areacode = s.Areacode
+		is.Area_name = s.Area_name
+		db.DB.Table(s.getTableName()).Save(&is)
 	}
 	return s
 }
