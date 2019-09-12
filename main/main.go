@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/hisheng/chang/conf"
 	"github.com/hisheng/chang/db"
 	"github.com/hisheng/chang/xueqiu"
@@ -35,8 +34,6 @@ func init()  {
 
 
 func main()  {
-	fmt.Println("chang start")
-
 
 
 	//go moni.AddmoniGroup1("2019-08-20")
@@ -50,12 +47,11 @@ func main()  {
 	//caiwu.XianjinliuRequest.Run()
 	//caiwu.ZichanfuzhaiRequest.Run()
 
+	//go xueqiu.UpdateData()
+	//select {
+	//
+	//}
 	go xueqiu.UpdateData()
-	select {
-
-	}
-
-	return
 	//fmt.Println(b.val(a,"name"))
 
 	CRON = cron.New()
