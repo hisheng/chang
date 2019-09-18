@@ -157,7 +157,6 @@ func (request LirunbiaoRequest_) initRequest(symbol string,count string) Lirunbi
 
 
 func (request LirunbiaoRequest_) Run (symbol,count string)  {
-
 	request = request.initRequest(symbol,count)
 	fmt.Println(request.SearchParms.Get("type"))
 

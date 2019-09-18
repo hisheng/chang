@@ -51,6 +51,9 @@ func main()  {
 	//select {
 	//
 	//}
+
+
+
 	go xueqiu.UpdateData()
 	//fmt.Println(b.val(a,"name"))
 
