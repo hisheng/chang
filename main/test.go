@@ -78,5 +78,8 @@ func main() {
 
 	// Print the AST.
 	ast.Print(fset, f)
+}
 
+func test()  {
+	
 }
