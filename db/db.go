@@ -27,6 +27,7 @@ var (
 func GetDb() {
 	initChangDb()
 	initReportDb()
+	//initTestDb()
 	//return db
 }
 
@@ -44,6 +45,8 @@ func initChangDb()  {
 		defer DB.Close()
 	}
 }
+
+
 
 func initReportDb()  {
 	ReportDb, err = gorm.Open(

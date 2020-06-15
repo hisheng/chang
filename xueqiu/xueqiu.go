@@ -21,7 +21,7 @@ func InitData()  {
 func UpdateData()  {
 	createTable()
 	
-	updateSymbol();
+	updateSymbol()
 
 	ss := Symbol.Gets()
 	for _,s := range ss{
