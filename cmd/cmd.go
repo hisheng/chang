@@ -25,4 +25,5 @@ func Execute() {
 
 func init() {
 	rootCmd.AddCommand(httpCmd)
+	rootCmd.AddCommand(crontabCmd)
 }
