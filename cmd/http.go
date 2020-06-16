@@ -21,7 +21,8 @@ var (
 			router := gin.Default()
 			router.GET("/test/detail", handler.TestDetail)
 			router.GET("/guxi/record", handler.GuxiRecord)
-
+			router.GET("/area", handler.Area)
+			router.GET("/area/init", handler.AreaInit)
 			if err := router.Run(HttpServerAddress); err != nil {
 				log.Fatal(err)
 			}
