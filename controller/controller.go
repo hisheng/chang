@@ -8,7 +8,7 @@ import (
 const codeOk = 200
 
 type Controller struct {
-	Ctx gin.Context
+	Ctx *gin.Context
 }
 
 func (c Controller) Json(obj interface{}) (int, gin.Negotiate) {

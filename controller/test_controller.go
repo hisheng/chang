@@ -8,8 +8,10 @@ type TestController struct {
 	Controller
 }
 
-func NewTestController() TestController {
-	return TestController{}
+func NewTestController(c *gin.Context) TestController {
+	return TestController{Controller{
+		Ctx: c,
+	}}
 }
 
 func (c TestController) Detail() (int, gin.Negotiate) {

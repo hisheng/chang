@@ -20,7 +20,7 @@ var (
 		Run: func(cmd *cobra.Command, args []string) {
 			router := gin.Default()
 			router.GET("/test/detail", handler.TestDetail)
-			router.GET("/test/detail", handler.TestDetail)
+			router.GET("/guxi/record", handler.GuxiRecord)
 
 			if err := router.Run(HttpServerAddress); err != nil {
 				log.Fatal(err)
