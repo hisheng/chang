@@ -18,7 +18,9 @@ func NewAreaController(c *gin.Context) AreaController {
 }
 
 func (c AreaController) List() (int, gin.Negotiate) {
-	return c.Json(jsoncached.Get("area"))
+	var areaMap map[int]string
+	_ = json.Unmarshal([]byte(jsoncached.Get("area")), &areaMap)
+	return c.Json(areaMap)
 }
 
 func (c AreaController) Init() (int, gin.Negotiate) {

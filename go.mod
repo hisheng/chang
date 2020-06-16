@@ -6,8 +6,7 @@ require (
 	github.com/BurntSushi/toml v0.3.1
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-sql-driver/mysql v1.4.1
-	github.com/golang/protobuf v1.3.3
-	github.com/hisheng/jsoncached v0.0.0-20200616070515-5a2af2533034
+	github.com/hisheng/jsoncached v0.0.0-20200616073239-0aae2e1a68e6
 	github.com/jinzhu/gorm v1.9.10
 	github.com/mozillazg/go-pinyin v0.15.0
 	github.com/robfig/cron v1.2.0
