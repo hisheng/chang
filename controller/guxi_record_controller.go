@@ -20,7 +20,10 @@ func NewGuxiRecordController(c *gin.Context) GuxiRecordController {
 
 func (c GuxiRecordController) List() (int, gin.Negotiate) {
 	//1 从文件中读取
-	guxiRecords, _ := jsoncached.Get("guxiRecords")
+	guxiRecords, err := jsoncached.Get("guxiRecords")
+	if err != nil {
+		return c.Json([]struct{}{})
+	}
 
 	//2 返回
 	var rs []model.GuxiRecord
