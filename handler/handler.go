@@ -8,7 +8,3 @@ import (
 func TestDetail(c *gin.Context) {
 	c.Negotiate(controller.NewTestController(c).Detail())
 }
-
-func GuxiRecord(c *gin.Context) {
-	c.Negotiate(controller.NewGuxiRecordController(c).List())
-}
