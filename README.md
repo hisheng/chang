@@ -100,5 +100,9 @@ cloc ./
 
 protoc --go_out=. *.proto
 
-
-
+-----------
+2020.06.24
+有空把 chang 的 xueqiu文件夹，里面的代码 分层一下cmd server repository model 层来 整理代码
+这个是第二轮的代码优化，以comment为模板
+功能上主要是 财务遇到的功能把加上------
+-----------
