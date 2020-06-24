@@ -10,7 +10,7 @@ import (
 
 var (
 	//CRON Expression Format
-	//A cron expression represents a set of times, using 6 space-separated fields.
+	//A croncmd expression represents a set of times, using 6 space-separated fields.
 	//
 	//Field name   | Mandatory? | Allowed values  | Allowed special characters
 	//----------   | ---------- | --------------  | --------------------------

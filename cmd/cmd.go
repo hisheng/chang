@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/hisheng/chang/cmd/croncmd"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -26,4 +27,5 @@ func Execute() {
 func init() {
 	rootCmd.AddCommand(httpCmd)
 	rootCmd.AddCommand(crontabCmd)
+	rootCmd.AddCommand(croncmd.BonusCmd)
 }
