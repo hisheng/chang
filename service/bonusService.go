@@ -3,9 +3,9 @@ package service
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/hisheng/chang/library/curl"
 	"github.com/hisheng/chang/model"
 	"github.com/hisheng/chang/repository"
-	"github.com/hisheng/chang/xueqiu"
 	"net/url"
 )
 
@@ -38,7 +38,7 @@ func (s BonusService) CurlGet(symbol string) {
 	params := url.Values{}
 	params.Add("symbol", symbol)
 	params.Add("extend", "true")
-	data := xueqiu.Get(s.url, params)
+	data := curl.XueqiuGet(s.url, params)
 	fmt.Println(data)
 	jsonData := []byte(data)
 
