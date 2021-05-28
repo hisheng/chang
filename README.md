@@ -1,4 +1,8 @@
 # chang
+执行
+go run ./main.go crontab 
+
+
 
 http://quotes.money.163.com/f10/hydb_601155.html#01g01
 
