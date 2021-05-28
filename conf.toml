@@ -3,12 +3,12 @@ debug = true
 addr = ":20000"
 
 [redis]
-ip="127.0.0.1"
-password=""
+ip = "127.0.0.1"
+password = ""
 
 [mysql]
-ip="127.0.0.1"
-port=":3306"
-user="root"
-password=""
-database="chang"
+ip = "127.0.0.1"
+port = ":3306"
+user = "root"
+password = ""
+database = "chang"
