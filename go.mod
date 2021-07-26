@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/BurntSushi/toml v0.3.1
-	github.com/gin-gonic/gin v1.6.3
+	github.com/gin-gonic/gin v1.7.0
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/hisheng/jsoncached v0.0.0-20200616090026-85eabff4a605
 	github.com/jinzhu/gorm v1.9.10
